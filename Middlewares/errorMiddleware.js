@@ -1,4 +1,4 @@
-function errorHandler(err, req, res, next) {
+function errorHandler(statusCode, err, req, res, next) {
     console.error(err.stack);
 
     if (res.headersSent) {
@@ -6,9 +6,9 @@ function errorHandler(err, req, res, next) {
     }
     
     console.log("ERROR MIDDLEWARE CALLED")
-    res.status(500).json({
-        message: 'Internal server error',
-        error: err.message
+    res.status(statusCode || 500).json({
+        ok: false, // Set the "ok" field to false for errors
+        message: err.message,
     });
 }
 
